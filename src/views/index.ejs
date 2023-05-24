@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./helpers/head.ejs') %>
+<body class="">
+    <%- include('./helpers/navbar.ejs') %>
+
+    <main class="container mt-5 text-center">
+        <h1>Gráficos de encuestas</h1>
+        <div class="m-auto w-75">
+            <canvas id="grafico"></canvas>
+        </div>
+
+        <a href="/encuesta" class="mt-3 btn btn-outline-info">Contestar encuesta</a>
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Datos del gráfico
+        var datos = {
+            labels: ['Visual', 'Cinestesico', 'Auditivo'],
+            datasets: [{
+                label: 'Estilos de aprendizaje',
+                data: <%=JSON.stringify(repeticiones)%>,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)'
+            }]
+        };
+
+        // Configuración del gráfico
+        var configuracion = {
+            type: 'bar',
+            data: datos,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        // Crear el gráfico
+        var ctx = document.getElementById('grafico').getContext('2d');
+        new Chart(ctx, configuracion);
+
+    </script>
+
+</body>
+</html>
