@@ -19,6 +19,7 @@ middlewares.verifyAuth = (req,res,next) => {
         if(err) throw err
         if(user.length == 0){
             res.redirect('/login')
+            return
         }
         
         next()
