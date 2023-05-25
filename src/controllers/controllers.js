@@ -133,7 +133,6 @@ controllers.logout = (req,res) => {
 }
 
 
-
 //LINK - REGISTRO
 controllers.register = (req,res) => {
     res.render('register', {
@@ -150,9 +149,13 @@ controllers.uploadRegister = (req,res) => {
         body.clave = hash
         console.log(hash)
         db.query(`INSERT INTO usuarios SET ? `, [body], (Err, result) => {
-            if(Err) throw Err
+            if(Err) {
+                console.error(err)
+                res.redirect('/login')
+                return
+            }
             console.log(result)
-            res.redirect('/')
+            res.redirect('/login')
         })
     })
 
