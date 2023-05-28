@@ -92,8 +92,12 @@ controllers.test1 = (req,res) => {
 
 // LINK - LOGIN
 controllers.login = (req,res) => {
-    res.render('login', {
-        title   :   '¡Inicia sesión!'
+    db.query('SELECT * FROM usuarios', (err,results) => {
+        if(err) throw err
+        res.render('login', {
+            title   :   '¡Inicia sesión!',
+            results
+        })
     })
 }
 

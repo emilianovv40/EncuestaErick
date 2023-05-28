@@ -23,5 +23,15 @@
         </form>
     </main>
 
+    <section class="container text-center mt-4">
+        <h2 class="text-uppercase">Usuarios</h2>
+        <ul class="list-group">
+            <% results.forEach(e => { %>
+                <li class="list-group-item"><%=e.correo_electronico%></li>
+            <% }) %>
+             
+        </ul>
+    </section>
+
 </body>
 </html>
