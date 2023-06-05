@@ -1,3 +1,16 @@
+function analizar(datos) {
+  const contador = {};
+
+  for (const tipo in datos) {
+    if (contador.hasOwnProperty(datos[tipo])) {
+      contador[datos[tipo]]++;
+    } else {
+      contador[datos[tipo]] = 1;
+    }
+  }
+
+  return contador;
+}
 
 const generarRespuesta = (respuestas) => {
     var contadorRespuestas = {};
@@ -75,4 +88,4 @@ const generarRespuesta = (respuestas) => {
   }
   
 
-  module.exports = {generarRespuesta, contarRepeticiones}
+  module.exports = {generarRespuesta, contarRepeticiones, analizar}

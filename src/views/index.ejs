@@ -5,44 +5,43 @@
     <%- include('./helpers/navbar.ejs') %>
 
     <main class="container mt-5 text-center">
-        <h1>Gráficos de encuestas</h1>
-        <div class="m-auto w-75">
-            <canvas id="grafico"></canvas>
+        <h1>Gráficos de encuesta</h1>
+        <p class="display-1 text-uppercase"><%=tipoAprendizaje%></p>
+        <div class="m-auto w-50">
+            <canvas class="m-auto w-100" id="grafico"></canvas>
         </div>
 
-        <a href="/encuesta" class="mt-3 btn btn-outline-info">Contestar encuesta</a>
     </main>
 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Datos del gráfico
-        var datos = {
-            labels: ['Visual', 'Cinestesico', 'Auditivo'],
+        const datos = {
+        visual: <%=visual%>,
+        auditivo: <%=auditivo%>,
+        cinestesico: <%=cinestesico%>
+        };
+
+        const ctx = document.getElementById('grafico').getContext('2d');
+
+        new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(datos),
             datasets: [{
-                label: 'Estilos de aprendizaje',
-                data: <%=JSON.stringify(repeticiones)%>,
-                backgroundColor: 'rgba(75, 192, 192, 0.6)'
+            label: 'Repeticiones',
+            data: Object.values(datos),
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)'
+            ]
             }]
-        };
-
-        // Configuración del gráfico
-        var configuracion = {
-            type: 'bar',
-            data: datos,
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        };
-
-        // Crear el gráfico
-        var ctx = document.getElementById('grafico').getContext('2d');
-        new Chart(ctx, configuracion);
+        },
+        options: {
+            responsive: true,
+        }
+        });
 
     </script>
 

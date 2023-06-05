@@ -1,5 +1,5 @@
 require('dotenv').config()
-const mysql = require('mysql2')
+const mysql = require('mysql')
 
 const db = mysql.createConnection({
     host            :   process.env.DB_HOST,
@@ -15,5 +15,16 @@ db.connect((err)=> {
     if(err) throw err
     console.log('database on')
 })
+
+
+setTimeout(keepAlive, 300000)
+
+function keepAlive () {
+    db.query('SELECT 1', (err) => {
+        if(err) throw err;
+        console.log('Reconexion exitosa')
+    })
+}
+
 
 module.exports = db

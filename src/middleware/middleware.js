@@ -26,5 +26,26 @@ middlewares.verifyAuth = (req,res,next) => {
     })
 }
 
+middlewares.verifyAdmin = (req,res,next) => {
+    const token = req.cookies.auth
+    if(token == undefined){
+        res.redirect('/login')
+        return
+    }
+
+    const decode = jwt.decode(token, process.env.JWT_SECRET)
+    db.query(`SELECT * FROM usuarios id_usuario = "${decode}"`, (err,user) => {
+        if(err) throw err
+        if(user.length == 0){
+            res.redirect('/login')
+            return
+        }
+        if(user[0].admin == 1){
+            next()
+        }
+        res.redirect('/login')
+    })
+}
+
 
 module.exports = middlewares
